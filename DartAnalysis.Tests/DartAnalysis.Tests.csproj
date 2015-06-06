@@ -9,8 +9,8 @@
     <ProjectGuid>{C7F0EB9D-6E39-485F-B7A7-D626F763A569}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DartAnalysis.Tests</RootNamespace>
-    <AssemblyName>DartAnalysis.Tests</AssemblyName>
+    <RootNamespace>DartVS.DartAnalysis.Tests</RootNamespace>
+    <AssemblyName>DartVS.DartAnalysis.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>

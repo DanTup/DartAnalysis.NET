@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using DartVS.DartAnalysis;
 using Xunit;
 
-namespace DartAnalysis.Tests
+namespace DartVS.DartAnalysis.Tests
 {
     public class ServerTests
     {
