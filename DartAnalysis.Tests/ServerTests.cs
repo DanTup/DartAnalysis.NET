@@ -11,9 +11,11 @@ namespace DartAnalysis.Tests
 		[Fact]
 		public async Task ServerVersion()
 		{
-			var service = new DartAnalysisService(new DirectoryInfo(@"M:\Apps\dart-sdk"));
-			var version = await service.GetVersion();
-			Assert.Equal(new Version("1.2.3.4"), version);
+			using (var service = new DartAnalysisService(new DirectoryInfo(@"M:\Apps\dart-sdk")))
+			{
+				var version = await service.GetVersion();
+				Assert.Equal(new Version("1.2.3.4"), version);
+			}
 		}
     }
 }
