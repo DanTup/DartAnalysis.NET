@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartAnalysis", "DartAnalysi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartAnalysis.Tests", "DartAnalysis.Tests\DartAnalysis.Tests.csproj", "{C7F0EB9D-6E39-485F-B7A7-D626F763A569}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonBuilder", "JsonBuilder\JsonBuilder.csproj", "{9AA63A19-1758-4B73-A568-036A41D40171}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonBuilder.Tests", "JsonBuilder.Tests\JsonBuilder.Tests.csproj", "{991625E6-2846-463C-924B-16ABD1FD20CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{C7F0EB9D-6E39-485F-B7A7-D626F763A569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7F0EB9D-6E39-485F-B7A7-D626F763A569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7F0EB9D-6E39-485F-B7A7-D626F763A569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AA63A19-1758-4B73-A568-036A41D40171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AA63A19-1758-4B73-A568-036A41D40171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AA63A19-1758-4B73-A568-036A41D40171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AA63A19-1758-4B73-A568-036A41D40171}.Release|Any CPU.Build.0 = Release|Any CPU
+		{991625E6-2846-463C-924B-16ABD1FD20CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{991625E6-2846-463C-924B-16ABD1FD20CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{991625E6-2846-463C-924B-16ABD1FD20CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{991625E6-2846-463C-924B-16ABD1FD20CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
