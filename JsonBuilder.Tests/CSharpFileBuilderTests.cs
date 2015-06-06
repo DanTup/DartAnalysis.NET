@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace JsonBuilder.Tests
+namespace DartVS.DartAnalysis.JsonBuilder.Tests
 {
     public class CSharpFileBuilderTests
     {
