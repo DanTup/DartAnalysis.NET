@@ -22,6 +22,6 @@ namespace DartVS.DartAnalysis.JsonBuilder
 
 			var output = builder.GetContents();
 			Debugger.Break();
-		}		
+		}
 	}
 }

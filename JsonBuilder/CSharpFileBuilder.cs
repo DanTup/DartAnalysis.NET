@@ -18,7 +18,8 @@ namespace DartVS.DartAnalysis.JsonBuilder
 		readonly string @namespace;
 		readonly List<CSharpClass> classes = new List<CSharpClass>();
 
-		public CSharpFileBuilder(string @namespace) {
+		public CSharpFileBuilder(string @namespace)
+		{
 			this.@namespace = @namespace;
 		}
 
@@ -77,7 +78,7 @@ namespace DartVS.DartAnalysis.JsonBuilder
 			return SyntaxFactory
 				.ClassDeclaration(name)
 				.AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
-				// TODO: XML Docs...
+				.WithXmlComment(docComment)
 				.WithMembers(GetProperties());
 		}
 		SyntaxList<MemberDeclarationSyntax> GetProperties()
@@ -88,31 +89,34 @@ namespace DartVS.DartAnalysis.JsonBuilder
 		}
 	}
 
-	public class CSharpProperty {
+	public class CSharpProperty
+	{
 		readonly Type type;
 		readonly string name;
 		readonly string docComment;
 
 		static CSharpCodeProvider csharp = new CSharpCodeProvider();
 
-		public CSharpProperty(Type type, string name, string docComment) {
+		public CSharpProperty(Type type, string name, string docComment)
+		{
 			this.type = type;
 			this.name = name;
 			this.docComment = docComment;
 		}
 
-		public PropertyDeclarationSyntax GetProperty() {
-            return
+		public PropertyDeclarationSyntax GetProperty()
+		{
+			return
 				SyntaxFactory.PropertyDeclaration(
 					SyntaxFactory.ParseTypeName(csharp.GetTypeOutput(new CodeTypeReference(type))),
 					name
 				)
-				// TODO: XML Docs...
 				.AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+				.WithXmlComment(docComment)
 				.AddAccessorListAccessors(
 					SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration).WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)),
 					SyntaxFactory.AccessorDeclaration(SyntaxKind.SetAccessorDeclaration).WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
 				);
-        }
+		}
 	}
 }

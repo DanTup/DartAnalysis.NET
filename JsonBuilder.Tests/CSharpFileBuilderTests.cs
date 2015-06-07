@@ -9,7 +9,7 @@ using Xunit;
 namespace DartVS.DartAnalysis.JsonBuilder.Tests
 {
 	public class CSharpFileBuilderTests
-    {
+	{
 		[Fact]
 		public void SimpleTest()
 		{
@@ -33,5 +33,5 @@ namespace DartVS.DartAnalysis.JsonBuilder.Tests
 
 			Assert.Equal(expected, contents);
 		}
-    }
+	}
 }
