@@ -32,12 +32,37 @@ namespace DartVS.DartAnalysis.JsonBuilder
 		{
 			var domainName = element.Ancestors("domain").First().Attribute("name").Value;
 			var methodName = element.Attribute("method").Value;
-			var className = GenerateName(domainName, methodName);
 			var doc = element.Element("p").Value;
-			builder.AddClass(className, doc);
+
+			var requestClass = builder.AddClass(Name(domainName, methodName, "Request"), doc);
+			if (element.Element("params") != null)
+				BuildRequestClass(requestClass, element.Element("params"));
+
+			if (element.Element("result") != null)
+			{
+				var responseClass = builder.AddClass(Name(domainName, methodName, "Response"), doc);
+				BuildResultClass(responseClass, element.Element("result"));
+			}
+		}
+		void BuildRequestClass(CSharpClass requestClass, XElement element)
+		{
+			foreach (var field in element.Elements("field"))
+			{
+				// TODO: Fix type
+				requestClass.AddProperty<string>(Name(field.Attribute("name").Value), field.Element("p").Value);
+			}
 		}
 
-		string GenerateName(params string[] parts)
+		void BuildResultClass(CSharpClass responseClass, XElement element)
+		{
+			foreach (var field in element.Elements("field"))
+			{
+				// TODO: Fix type
+				responseClass.AddProperty<string>(Name(field.Attribute("name").Value), field.Element("p").Value);
+			}
+		}
+
+		string Name(params string[] parts)
 		{
 			return string.Join("", parts.Select(p => char.ToUpper(p[0]) + p.Substring(1)));
 		}
