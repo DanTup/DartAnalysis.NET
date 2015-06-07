@@ -18,7 +18,7 @@ namespace DartVS.DartAnalysis.JsonBuilder
 
 		static void Main(string[] args)
 		{
-			var builder = new ApiClassBuilder(new FileInfo(ApiDoc));
+			var builder = new ApiClassVisitor(new FileInfo(ApiDoc));
 
 			var output = builder.GetContents();
 			Debugger.Break();
