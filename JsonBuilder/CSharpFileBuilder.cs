@@ -3,7 +3,9 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.CodeAnalysis.MSBuild;
+using Microsoft.CSharp;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,14 +20,14 @@ namespace DartVS.DartAnalysis.JsonBuilder
 
 		public CSharpFileBuilder(string @namespace) {
 			this.@namespace = @namespace;
-        }
+		}
 
 		public CSharpClass AddClass(string name)
 		{
 			var @class = new CSharpClass(name);
 			classes.Add(@class);
 			return @class;
-        }
+		}
 
 		public string GetContents()
 		{
@@ -35,7 +37,8 @@ namespace DartVS.DartAnalysis.JsonBuilder
 					.WithMembers(GetClasses());
 
 			var workspace = MSBuildWorkspace.Create();
-			var formattedResult = Formatter.Format(document, workspace);
+			var options = workspace.Options.WithChangedOption(FormattingOptions.UseTabs, LanguageNames.CSharp, true);
+			var formattedResult = Formatter.Format(document, workspace, options);
 
 			var output = new StringBuilder();
 			using (var sw = new StringWriter(output))
@@ -43,7 +46,7 @@ namespace DartVS.DartAnalysis.JsonBuilder
 
 			return output.ToString();
 		}
-		
+
 		SyntaxList<MemberDeclarationSyntax> GetClasses()
 		{
 			return SyntaxFactory.List(
@@ -55,7 +58,7 @@ namespace DartVS.DartAnalysis.JsonBuilder
 	public class CSharpClass
 	{
 		readonly string name;
-		readonly List<Tuple<Type, string>> properties = new List<Tuple<Type, string>>();
+		readonly List<CSharpProperty> properties = new List<CSharpProperty>();
 
 		public CSharpClass(string name)
 		{
@@ -64,20 +67,46 @@ namespace DartVS.DartAnalysis.JsonBuilder
 
 		public void AddProperty<T>(string name)
 		{
-			properties.Add(Tuple.Create(typeof(T), name));
+			properties.Add(new CSharpProperty(typeof(T), name));
 		}
 
 		public MemberDeclarationSyntax GetClass()
 		{
 			return SyntaxFactory
 				.ClassDeclaration(name)
+				.AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
 				.WithMembers(GetProperties());
 		}
 		SyntaxList<MemberDeclarationSyntax> GetProperties()
 		{
 			return SyntaxFactory.List<MemberDeclarationSyntax>(
-				properties.Select(p => SyntaxFactory.PropertyDeclaration(SyntaxFactory.ParseTypeName(p.Item1.FullName), p.Item2))
+				properties.Select(p => p.GetProperty())
 			);
 		}
+	}
+
+	public class CSharpProperty {
+		readonly Type type;
+		readonly string name;
+
+		static CSharpCodeProvider csharp = new CSharpCodeProvider();
+
+		public CSharpProperty(Type type, string name) {
+			this.type = type;
+			this.name = name;
+		}
+
+		public PropertyDeclarationSyntax GetProperty() {
+            return
+				SyntaxFactory.PropertyDeclaration(
+					SyntaxFactory.ParseTypeName(csharp.GetTypeOutput(new CodeTypeReference(type))),
+					name
+				)
+				.AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+				.AddAccessorListAccessors(
+					SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration).WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)),
+					SyntaxFactory.AccessorDeclaration(SyntaxKind.SetAccessorDeclaration).WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
+				);
+        }
 	}
 }
