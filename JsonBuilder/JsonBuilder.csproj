@@ -119,7 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CSharpFileBuilder.cs" />
-    <Compile Include="JsonBuilder.cs" />
+    <Compile Include="ApiClassBuilder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyntaxExtensions.cs" />

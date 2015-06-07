@@ -5,11 +5,11 @@ using System.Xml.Linq;
 
 namespace DartVS.DartAnalysis.JsonBuilder
 {
-	class JsonBuilder
+	class ApiClassBuilder
 	{
 		CSharpFileBuilder builder = new CSharpFileBuilder("DartVS.DartAnalysis");
 
-		public JsonBuilder(FileInfo apiDoc)
+		public ApiClassBuilder(FileInfo apiDoc)
 		{
 			VisitChildren(XDocument.Load(apiDoc.FullName));
 		}
