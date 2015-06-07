@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,8 @@ namespace DartVS.DartAnalysis.JsonBuilder
 		{
 			var builder = new JsonBuilder(new FileInfo(ApiDoc));
 
+			var output = builder.GetContents();
+			Debugger.Break();
 		}		
 	}
 }
