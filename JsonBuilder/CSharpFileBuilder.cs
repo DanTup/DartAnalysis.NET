@@ -22,9 +22,9 @@ namespace DartVS.DartAnalysis.JsonBuilder
 			this.@namespace = @namespace;
 		}
 
-		public CSharpClass AddClass(string name)
+		public CSharpClass AddClass(string name, string docComment)
 		{
-			var @class = new CSharpClass(name);
+			var @class = new CSharpClass(name, docComment);
 			classes.Add(@class);
 			return @class;
 		}
@@ -58,16 +58,18 @@ namespace DartVS.DartAnalysis.JsonBuilder
 	public class CSharpClass
 	{
 		readonly string name;
+		readonly string docComment;
 		readonly List<CSharpProperty> properties = new List<CSharpProperty>();
 
-		public CSharpClass(string name)
+		public CSharpClass(string name, string docComment)
 		{
 			this.name = name;
+			this.docComment = docComment;
 		}
 
-		public void AddProperty<T>(string name)
+		public void AddProperty<T>(string name, string docComment)
 		{
-			properties.Add(new CSharpProperty(typeof(T), name));
+			properties.Add(new CSharpProperty(typeof(T), name, docComment));
 		}
 
 		public MemberDeclarationSyntax GetClass()
@@ -75,6 +77,7 @@ namespace DartVS.DartAnalysis.JsonBuilder
 			return SyntaxFactory
 				.ClassDeclaration(name)
 				.AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+				// TODO: XML Docs...
 				.WithMembers(GetProperties());
 		}
 		SyntaxList<MemberDeclarationSyntax> GetProperties()
@@ -88,12 +91,14 @@ namespace DartVS.DartAnalysis.JsonBuilder
 	public class CSharpProperty {
 		readonly Type type;
 		readonly string name;
+		readonly string docComment;
 
 		static CSharpCodeProvider csharp = new CSharpCodeProvider();
 
-		public CSharpProperty(Type type, string name) {
+		public CSharpProperty(Type type, string name, string docComment) {
 			this.type = type;
 			this.name = name;
+			this.docComment = docComment;
 		}
 
 		public PropertyDeclarationSyntax GetProperty() {
@@ -102,6 +107,7 @@ namespace DartVS.DartAnalysis.JsonBuilder
 					SyntaxFactory.ParseTypeName(csharp.GetTypeOutput(new CodeTypeReference(type))),
 					name
 				)
+				// TODO: XML Docs...
 				.AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
 				.AddAccessorListAccessors(
 					SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration).WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)),
