@@ -118,8 +118,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiClassBuilder.cs" />
     <Compile Include="CSharpFileBuilder.cs" />
-    <Compile Include="ApiClassVisitor.cs" />
+    <Compile Include="ApiDocVisitor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyntaxExtensions.cs" />
